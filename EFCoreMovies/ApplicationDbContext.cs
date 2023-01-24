@@ -1,4 +1,5 @@
 ﻿using EFCoreMovies.Entities;
+using EFCoreMovies.Entities.Seeding;
 using Microsoft.EntityFrameworkCore;
 using System.Reflection;
 
@@ -27,6 +28,7 @@ namespace EFCoreMovies
         {
             base.OnModelCreating(modelBuilder);
             modelBuilder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
+            Module3Seeding.Seed(modelBuilder);
         }
     }
 }
