@@ -1,5 +1,6 @@
 ﻿using EFCoreMovies.Entities;
 using Microsoft.EntityFrameworkCore;
+using System.Reflection;
 
 namespace EFCoreMovies
 {
@@ -25,23 +26,7 @@ namespace EFCoreMovies
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
-            modelBuilder.Entity<Genre>().Property(p => p.Name).IsRequired();
-
-            modelBuilder.Entity<Actor>().Property(p => p.Name).IsRequired();
-            modelBuilder.Entity<Actor>().Property(p => p.Biography).HasColumnType("nvarchar(max)");
-
-            modelBuilder.Entity<Cinema>().Property(p => p.Name).IsRequired();
-            
-            modelBuilder.Entity<CinemaHall>().Property(p => p.Cost).HasPrecision(9, 2);
-            modelBuilder.Entity<CinemaHall>()
-                .Property(p => p.CinemaHallType).HasDefaultValue(CinemaHallType.TwoDimensions);
-
-            modelBuilder.Entity<Movie>().Property(p => p.Title).HasMaxLength(250).IsRequired();
-            modelBuilder.Entity<Movie>().Property(p => p.PosterURL).HasMaxLength(500).IsUnicode(false);
-
-            modelBuilder.Entity<CinemaOffer>().Property(p => p.DiscountPercentage).HasPrecision(5, 2);
-
-            modelBuilder.Entity<MovieActor>().HasKey(p => new { p.MovieId, p.ActorId });
+            modelBuilder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
         }
     }
 }
