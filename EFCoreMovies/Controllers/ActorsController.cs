@@ -66,6 +66,25 @@ namespace EFCoreMovies.Controllers
                 return BadRequest(ex.Message);
             }
         }
+
+        [HttpPut("{id}")]
+        public async Task<ActionResult> UpdateActor(int id, Actor actor)
+        { 
+            var actorToUpdate = await context.Actors.FirstOrDefaultAsync(x => x.Id == id);
+
+            if (actorToUpdate == null)
+            {
+                return BadRequest();
+            }
+
+            actorToUpdate.DateOfBirth = actor.DateOfBirth;
+            actorToUpdate.Name = actor.Name;
+            actorToUpdate.MoviesActors = actor.MoviesActors;
+            actorToUpdate.Biography= actor.Biography;
+
+            await context.SaveChangesAsync();
+            return Ok(actorToUpdate);
+        }
     }
 }
 

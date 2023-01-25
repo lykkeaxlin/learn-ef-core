@@ -60,8 +60,45 @@ namespace EFCoreMovies.Controllers
         [HttpPost]
         public async Task<ActionResult> Post(Genre genre)
         { 
-            context.Genres.Add(genre); // marking genre as added in memory
+            await context.Genres.AddAsync(genre); // marking genre as added in memory
             await context.SaveChangesAsync();   // insert in the table
+            return Ok();
+        }
+
+        [HttpPost("multiple")]
+        public async Task<ActionResult> PostMultiple(IEnumerable<Genre> genres)
+        { 
+            await context.Genres.AddRangeAsync(genres);
+            await context.SaveChangesAsync();
+            return Ok();
+        }
+
+        [HttpPut("updateTitle")]
+        public async Task<ActionResult> Update(int id, string newTitle)
+        {
+            var genreToUpdate = await context.Genres.FirstOrDefaultAsync(x => x.Id == id);
+
+            if (genreToUpdate == null)
+            {
+                return BadRequest();
+            }
+
+            genreToUpdate.Name = newTitle;
+            return Ok(genreToUpdate);
+        }
+
+        [HttpDelete("{id}")]
+        public async Task<ActionResult> DeleteById(int id)
+        { 
+            var genre = await context.Genres.FirstOrDefaultAsync(x => x.Id == id);
+
+            if (genre == null)
+            { 
+                return BadRequest(); 
+            }
+
+            context.Remove(genre);
+            await context.SaveChangesAsync();
             return Ok();
         }
     }
