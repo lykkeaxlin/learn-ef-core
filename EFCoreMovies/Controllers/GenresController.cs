@@ -56,21 +56,5 @@ namespace EFCoreMovies.Controllers
                 return BadRequest(ex.Message);
             }
         }
-
-        [HttpGet("certainColumns")]
-        public async Task<ActionResult<IEnumerable<Actor>>> GetCertainColumns()
-        {
-            try
-            {
-                var actors = await context.Actors
-                        .Select(a => new Actor { Id = a.Id, Name = a.Name, DateOfBirth = a.DateOfBirth })
-                        .ToListAsync();
-                return Ok(actors);
-            }
-            catch (Exception ex)
-            {
-                return BadRequest(ex.Message);
-            }
-        }
     }
 }
