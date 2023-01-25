@@ -56,5 +56,13 @@ namespace EFCoreMovies.Controllers
                 return BadRequest(ex.Message);
             }
         }
+
+        [HttpPost]
+        public async Task<ActionResult> Post(Genre genre)
+        { 
+            context.Genres.Add(genre); // marking genre as added in memory
+            await context.SaveChangesAsync();   // insert in the table
+            return Ok();
+        }
     }
 }
