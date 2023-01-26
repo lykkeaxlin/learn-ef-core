@@ -20,6 +20,9 @@ builder.Services.AddScoped<IActorRepository, ActorRepository>();
 builder.Services.AddScoped<ICinemaRepository, CinemaRepository>();
 builder.Services.AddScoped<IGenreRepository, GenreRepository>();
 builder.Services.AddScoped<IMovieRepository, MovieRepository>();
+builder.Services.AddScoped<ICinemaHallRepository, CinemaHallRepository>();
+builder.Services.AddScoped<ICinemaOfferRepository, CinemaOfferRepository>();
+builder.Services.AddScoped<IMovieActorRepository, MovieActorRepository>();
 
 var app = builder.Build();
 

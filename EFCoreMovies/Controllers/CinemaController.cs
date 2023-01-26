@@ -10,7 +10,7 @@ using NetTopologySuite.Geometries;
 namespace EFCoreMovies.Controllers
 {
     [ApiController]
-    [Route("api/cinemas")]
+    [Route("api/cinema")]
     public class CinemaController : ControllerBase
     {
         private readonly ICinemaRepository cinemaRepository;

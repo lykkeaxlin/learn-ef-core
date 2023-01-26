@@ -7,7 +7,7 @@ using Microsoft.EntityFrameworkCore;
 namespace EFCoreMovies.Controllers
 {
     [ApiController]
-    [Route("api/actors")]
+    [Route("api/actor")]
     public class ActorController : ControllerBase
     {
         private readonly IActorRepository actorRepository;
