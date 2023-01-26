@@ -5,6 +5,7 @@ using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -25,17 +26,6 @@ namespace EFCoreMovies_Infra.BusinessLogic.Repository
             return actors;
         }
 
-        public async Task<IEnumerable<Actor>> GetActorsNullFields()
-        {
-            var actors = await context.Actors.Select(x => new Actor()
-            {
-                Id = x.Id,
-                Name = x.Name,
-                DateOfBirth = x.DateOfBirth,
-            }).ToListAsync();
-            return actors;
-        }
-
         public async Task<Actor> UpdateActor(Actor actor)
         {
             var actorToUpdate = await context.Actors.FirstOrDefaultAsync(x => x.Id == actor.Id);
@@ -47,7 +37,6 @@ namespace EFCoreMovies_Infra.BusinessLogic.Repository
 
             actorToUpdate.DateOfBirth = actor.DateOfBirth;
             actorToUpdate.Name = actor.Name;
-            actorToUpdate.MoviesActors = actor.MoviesActors;
 
             await context.SaveChangesAsync();
             return actorToUpdate;

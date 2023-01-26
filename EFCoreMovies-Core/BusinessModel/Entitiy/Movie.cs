@@ -8,7 +8,5 @@
         public DateTime ReleaseDate { get; set; }
         public string PosterURL { get; set; }
         public HashSet<Genre> Genres { get; set; }
-        public HashSet<CinemaHall> CinemaHalls { get; set; }
-        public HashSet<MovieActor> MoviesActors { get; set; }
     }
 }

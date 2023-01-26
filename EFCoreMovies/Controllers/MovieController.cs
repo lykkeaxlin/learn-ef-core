@@ -30,5 +30,20 @@ namespace EFCoreMovies.Controllers
                 return BadRequest(ex.Message);
             }
         }
+
+        [HttpGet("{id}")]
+        public async Task<ActionResult<IEnumerable<Movie>>> GetMovieById(int id)
+        {
+            try
+            {
+                var movie = await movieRepository.GetMovieById(id);
+                return Ok(movie);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
     }
 }

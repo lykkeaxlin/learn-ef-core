@@ -22,16 +22,15 @@ namespace EFCoreMovies_Infra.BusinessLogic.Repository
         {
             var movies = await context.Movies
                     .Include(x => x.Genres)
-                    .Include(x => x.CinemaHalls)
-                        .ThenInclude(xx => xx.Cinema)
-                    .Include(x => x.MoviesActors)
-                        .ThenInclude(xx => xx.Actor)
                     .ToListAsync();
             return movies;
         }
-        public Task<Movie> GetMovieById(int id)
+        public async Task<Movie> GetMovieById(int id)
         {
-            throw new NotImplementedException();
+            var movies = await context.Movies
+                     .Include(x => x.Genres)
+                     .FirstOrDefaultAsync(x => x.Id == id);
+            return movies;
         }
 
         public Task<IEnumerable<Movie>> GetMoviesGroupedByCinemas()

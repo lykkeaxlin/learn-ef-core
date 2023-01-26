@@ -22,9 +22,7 @@ namespace EFCoreMovies_Infra.BusinessLogic.Repository
 
         public async Task<IEnumerable<Genre>> GetGenres()
         {
-            var genres = await context.Genres
-                .Include(x => x.Movies)
-                .ToListAsync();
+            var genres = await context.Genres.ToListAsync();
             return genres;
         }
 

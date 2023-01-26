@@ -54,19 +54,17 @@ namespace EFCoreMoviesInfra.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Movies",
+                name: "MovieActors",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    Title = table.Column<string>(type: "nvarchar(150)", maxLength: 150, nullable: true),
-                    InCinemas = table.Column<bool>(type: "bit", nullable: false),
-                    ReleaseDate = table.Column<DateTime>(type: "Date", nullable: false),
-                    PosterURL = table.Column<string>(type: "nvarchar(150)", maxLength: 150, nullable: true)
+                    MovieId = table.Column<int>(type: "int", nullable: false),
+                    ActorId = table.Column<int>(type: "int", nullable: false),
+                    Character = table.Column<string>(type: "nvarchar(150)", maxLength: 150, nullable: true),
+                    Order = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Movies", x => x.Id);
+                    table.PrimaryKey("PK_MovieActors", x => new { x.MovieId, x.ActorId });
                 });
 
             migrationBuilder.CreateTable(
@@ -113,6 +111,28 @@ namespace EFCoreMoviesInfra.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Movies",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Title = table.Column<string>(type: "nvarchar(150)", maxLength: 150, nullable: true),
+                    InCinemas = table.Column<bool>(type: "bit", nullable: false),
+                    ReleaseDate = table.Column<DateTime>(type: "Date", nullable: false),
+                    PosterURL = table.Column<string>(type: "nvarchar(150)", maxLength: 150, nullable: true),
+                    CinemaHallId = table.Column<int>(type: "int", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Movies", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Movies_CinemaHalls_CinemaHallId",
+                        column: x => x.CinemaHallId,
+                        principalTable: "CinemaHalls",
+                        principalColumn: "Id");
+                });
+
+            migrationBuilder.CreateTable(
                 name: "GenreMovie",
                 columns: table => new
                 {
@@ -130,56 +150,6 @@ namespace EFCoreMoviesInfra.Migrations
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_GenreMovie_Movies_MoviesId",
-                        column: x => x.MoviesId,
-                        principalTable: "Movies",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "MovieActors",
-                columns: table => new
-                {
-                    MovieId = table.Column<int>(type: "int", nullable: false),
-                    ActorId = table.Column<int>(type: "int", nullable: false),
-                    Character = table.Column<string>(type: "nvarchar(150)", maxLength: 150, nullable: true),
-                    Order = table.Column<int>(type: "int", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_MovieActors", x => new { x.MovieId, x.ActorId });
-                    table.ForeignKey(
-                        name: "FK_MovieActors_Actors_ActorId",
-                        column: x => x.ActorId,
-                        principalTable: "Actors",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_MovieActors_Movies_MovieId",
-                        column: x => x.MovieId,
-                        principalTable: "Movies",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "CinemaHallMovie",
-                columns: table => new
-                {
-                    CinemaHallsId = table.Column<int>(type: "int", nullable: false),
-                    MoviesId = table.Column<int>(type: "int", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_CinemaHallMovie", x => new { x.CinemaHallsId, x.MoviesId });
-                    table.ForeignKey(
-                        name: "FK_CinemaHallMovie_CinemaHalls_CinemaHallsId",
-                        column: x => x.CinemaHallsId,
-                        principalTable: "CinemaHalls",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_CinemaHallMovie_Movies_MoviesId",
                         column: x => x.MoviesId,
                         principalTable: "Movies",
                         principalColumn: "Id",
@@ -225,15 +195,29 @@ namespace EFCoreMoviesInfra.Migrations
                 });
 
             migrationBuilder.InsertData(
-                table: "Movies",
-                columns: new[] { "Id", "InCinemas", "PosterURL", "ReleaseDate", "Title" },
+                table: "MovieActors",
+                columns: new[] { "ActorId", "MovieId", "Character", "Order" },
                 values: new object[,]
                 {
-                    { 1, false, "https://upload.wikimedia.org/wikipedia/en/8/8a/The_Avengers_%282012_film%29_poster.jpg", new DateTime(2012, 4, 11, 0, 0, 0, 0, DateTimeKind.Unspecified), "Avengers" },
-                    { 2, false, "https://upload.wikimedia.org/wikipedia/en/9/98/Coco_%282017_film%29_poster.jpg", new DateTime(2017, 11, 22, 0, 0, 0, 0, DateTimeKind.Unspecified), "Coco" },
-                    { 3, false, "https://upload.wikimedia.org/wikipedia/en/0/00/Spider-Man_No_Way_Home_poster.jpg", new DateTime(2022, 12, 17, 0, 0, 0, 0, DateTimeKind.Unspecified), "Spider-Man: No way home" },
-                    { 4, false, "https://upload.wikimedia.org/wikipedia/en/0/00/Spider-Man_No_Way_Home_poster.jpg", new DateTime(2019, 7, 2, 0, 0, 0, 0, DateTimeKind.Unspecified), "Spider-Man: Far From Home" },
-                    { 5, true, "https://upload.wikimedia.org/wikipedia/en/5/50/The_Matrix_Resurrections.jpg", new DateTime(2023, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "The Matrix Resurrections" }
+                    { 3, 1, "Iron Man", 2 },
+                    { 4, 1, "Capitán América", 1 },
+                    { 7, 1, "Black Widow", 3 },
+                    { 1, 3, "Peter Parker", 1 },
+                    { 1, 4, "Peter Parker", 1 },
+                    { 2, 4, "Samuel L. Jackson", 2 },
+                    { 8, 5, "Neo", 1 }
+                });
+
+            migrationBuilder.InsertData(
+                table: "Movies",
+                columns: new[] { "Id", "CinemaHallId", "InCinemas", "PosterURL", "ReleaseDate", "Title" },
+                values: new object[,]
+                {
+                    { 1, null, false, "https://upload.wikimedia.org/wikipedia/en/8/8a/The_Avengers_%282012_film%29_poster.jpg", new DateTime(2012, 4, 11, 0, 0, 0, 0, DateTimeKind.Unspecified), "Avengers" },
+                    { 2, null, false, "https://upload.wikimedia.org/wikipedia/en/9/98/Coco_%282017_film%29_poster.jpg", new DateTime(2017, 11, 22, 0, 0, 0, 0, DateTimeKind.Unspecified), "Coco" },
+                    { 3, null, false, "https://upload.wikimedia.org/wikipedia/en/0/00/Spider-Man_No_Way_Home_poster.jpg", new DateTime(2022, 12, 17, 0, 0, 0, 0, DateTimeKind.Unspecified), "Spider-Man: No way home" },
+                    { 4, null, false, "https://upload.wikimedia.org/wikipedia/en/0/00/Spider-Man_No_Way_Home_poster.jpg", new DateTime(2019, 7, 2, 0, 0, 0, 0, DateTimeKind.Unspecified), "Spider-Man: Far From Home" },
+                    { 5, null, true, "https://upload.wikimedia.org/wikipedia/en/5/50/The_Matrix_Resurrections.jpg", new DateTime(2023, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "The Matrix Resurrections" }
                 });
 
             migrationBuilder.InsertData(
@@ -279,39 +263,6 @@ namespace EFCoreMoviesInfra.Migrations
                     { 5, 5 }
                 });
 
-            migrationBuilder.InsertData(
-                table: "MovieActors",
-                columns: new[] { "ActorId", "MovieId", "Character", "Order" },
-                values: new object[,]
-                {
-                    { 3, 1, "Iron Man", 2 },
-                    { 4, 1, "Capitán América", 1 },
-                    { 7, 1, "Black Widow", 3 },
-                    { 1, 3, "Peter Parker", 1 },
-                    { 1, 4, "Peter Parker", 1 },
-                    { 2, 4, "Samuel L. Jackson", 2 },
-                    { 8, 5, "Neo", 1 }
-                });
-
-            migrationBuilder.InsertData(
-                table: "CinemaHallMovie",
-                columns: new[] { "CinemaHallsId", "MoviesId" },
-                values: new object[,]
-                {
-                    { 1, 5 },
-                    { 2, 5 },
-                    { 3, 5 },
-                    { 4, 5 },
-                    { 5, 5 },
-                    { 6, 5 },
-                    { 7, 5 }
-                });
-
-            migrationBuilder.CreateIndex(
-                name: "IX_CinemaHallMovie_MoviesId",
-                table: "CinemaHallMovie",
-                column: "MoviesId");
-
             migrationBuilder.CreateIndex(
                 name: "IX_CinemaHalls_CinemaId",
                 table: "CinemaHalls",
@@ -329,16 +280,16 @@ namespace EFCoreMoviesInfra.Migrations
                 column: "MoviesId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_MovieActors_ActorId",
-                table: "MovieActors",
-                column: "ActorId");
+                name: "IX_Movies_CinemaHallId",
+                table: "Movies",
+                column: "CinemaHallId");
         }
 
         /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "CinemaHallMovie");
+                name: "Actors");
 
             migrationBuilder.DropTable(
                 name: "CinemaOffers");
@@ -350,16 +301,13 @@ namespace EFCoreMoviesInfra.Migrations
                 name: "MovieActors");
 
             migrationBuilder.DropTable(
-                name: "CinemaHalls");
-
-            migrationBuilder.DropTable(
                 name: "Genres");
 
             migrationBuilder.DropTable(
-                name: "Actors");
+                name: "Movies");
 
             migrationBuilder.DropTable(
-                name: "Movies");
+                name: "CinemaHalls");
 
             migrationBuilder.DropTable(
                 name: "Cinemas");

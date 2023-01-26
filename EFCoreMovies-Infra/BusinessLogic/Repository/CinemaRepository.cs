@@ -28,7 +28,6 @@ namespace EFCoreMovies_Infra.BusinessLogic.Repository
             var cinemas = await context.Cinemas
                 .Include(x => x.CinemaOffer)
                 .Include(x => x.CinemaHalls)
-                    .ThenInclude(xx => xx.Movies)
                 .ToListAsync();
             return cinemas;
         }

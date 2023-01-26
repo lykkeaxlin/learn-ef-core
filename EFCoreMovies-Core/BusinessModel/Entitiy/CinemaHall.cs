@@ -1,4 +1,6 @@
-﻿namespace EFCoreMovies.Entities
+﻿using System.ComponentModel.DataAnnotations.Schema;
+
+namespace EFCoreMovies.Entities
 {
     public class CinemaHall
     {
@@ -6,7 +8,6 @@
         public CinemaHallType CinemaHallType { get; set; }
         public decimal Cost { get; set; }
         public int CinemaId { get; set; }
-        public Cinema Cinema { get; set; }
-        public HashSet<Movie> Movies { get; set; }
+        public IEnumerable<Movie> Movies { get; set; }
     }
 }

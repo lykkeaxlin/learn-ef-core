@@ -116,25 +116,10 @@ namespace EFCoreMovies.Entities.Seeding
                 PosterURL = "https://upload.wikimedia.org/wikipedia/en/8/8a/The_Avengers_%282012_film%29_poster.jpg",
             };
 
-            var entityCinemaHallMovie   = "CinemaHallMovie";
             var cinemaHallsId           = "CinemaHallsId";
             var moviesId                = "MoviesId";
 
-            var entityGenreMovie        = "GenreMovie";
             var genresId                = "GenresId";
-
-            modelBuilder.Entity(entityGenreMovie).HasData(
-                new Dictionary<string, object>
-                {
-                    [genresId] = action.Id,
-                    [moviesId] = avengers.Id
-                },
-                 new Dictionary<string, object>
-                 {
-                     [genresId] = scienceFiction.Id,
-                     [moviesId] = avengers.Id
-                 }
-                );
 
             var coco = new Movie()
             {
@@ -145,10 +130,6 @@ namespace EFCoreMovies.Entities.Seeding
                 PosterURL = "https://upload.wikimedia.org/wikipedia/en/9/98/Coco_%282017_film%29_poster.jpg"
             };
 
-            modelBuilder.Entity(entityGenreMovie).HasData(
-               new Dictionary<string, object> { [genresId] = animation.Id, [moviesId] = coco.Id }
-           );
-
             var noWayHome = new Movie()
             {
                 Id = 3,
@@ -157,12 +138,6 @@ namespace EFCoreMovies.Entities.Seeding
                 ReleaseDate = new DateTime(2022, 12, 17),
                 PosterURL = "https://upload.wikimedia.org/wikipedia/en/0/00/Spider-Man_No_Way_Home_poster.jpg"
             };
-
-            modelBuilder.Entity(entityGenreMovie).HasData(
-               new Dictionary<string, object> { [genresId] = scienceFiction.Id, [moviesId] = noWayHome.Id },
-               new Dictionary<string, object> { [genresId] = action.Id, [moviesId] = noWayHome.Id },
-               new Dictionary<string, object> { [genresId] = comedy.Id, [moviesId] = noWayHome.Id }
-           );
 
             var farFromHome = new Movie()
             {
@@ -173,12 +148,6 @@ namespace EFCoreMovies.Entities.Seeding
                 PosterURL = "https://upload.wikimedia.org/wikipedia/en/0/00/Spider-Man_No_Way_Home_poster.jpg"
             };
 
-            modelBuilder.Entity(entityGenreMovie).HasData(
-               new Dictionary<string, object> { [genresId] = scienceFiction.Id, [moviesId] = farFromHome.Id },
-               new Dictionary<string, object> { [genresId] = action.Id, [moviesId] = farFromHome.Id },
-               new Dictionary<string, object> { [genresId] = comedy.Id, [moviesId] = farFromHome.Id }
-           );
-
             var theMatrixResurrections = new Movie()
             {
                 Id = 5,
@@ -187,22 +156,6 @@ namespace EFCoreMovies.Entities.Seeding
                 ReleaseDate = new DateTime(2023, 1, 1),
                 PosterURL = "https://upload.wikimedia.org/wikipedia/en/5/50/The_Matrix_Resurrections.jpg",
             };
-
-            modelBuilder.Entity(entityGenreMovie).HasData(
-              new Dictionary<string, object> { [genresId] = scienceFiction.Id, [moviesId] = theMatrixResurrections.Id },
-              new Dictionary<string, object> { [genresId] = action.Id, [moviesId] = theMatrixResurrections.Id },
-              new Dictionary<string, object> { [genresId] = drama.Id, [moviesId] = theMatrixResurrections.Id }
-          );
-
-            modelBuilder.Entity(entityCinemaHallMovie).HasData(
-             new Dictionary<string, object> { [cinemaHallsId] = cinemaHall2DSambil.Id, [moviesId] = theMatrixResurrections.Id },
-             new Dictionary<string, object> { [cinemaHallsId] = cinemaHall3DSambil.Id, [moviesId] = theMatrixResurrections.Id },
-             new Dictionary<string, object> { [cinemaHallsId] = cinemaHall2DAgora.Id, [moviesId] = theMatrixResurrections.Id },
-             new Dictionary<string, object> { [cinemaHallsId] = cinemaHall3DAgora.Id, [moviesId] = theMatrixResurrections.Id },
-             new Dictionary<string, object> { [cinemaHallsId] = cinemaHall2DMegacentro.Id, [moviesId] = theMatrixResurrections.Id },
-             new Dictionary<string, object> { [cinemaHallsId] = cinemaHall3DMegacentro.Id, [moviesId] = theMatrixResurrections.Id },
-             new Dictionary<string, object> { [cinemaHallsId] = cinemaHallCXCMegacentro.Id, [moviesId] = theMatrixResurrections.Id }
-            );
 
             var keanuReevesMatrix = new MovieActor
             {

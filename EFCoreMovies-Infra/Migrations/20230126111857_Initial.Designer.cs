@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace EFCoreMoviesInfra.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20230126091741_Initial")]
+    [Migration("20230126111857_Initial")]
     partial class Initial
     {
         /// <inheritdoc />
@@ -24,58 +24,6 @@ namespace EFCoreMoviesInfra.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
-
-            modelBuilder.Entity("CinemaHallMovie", b =>
-                {
-                    b.Property<int>("CinemaHallsId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("MoviesId")
-                        .HasColumnType("int");
-
-                    b.HasKey("CinemaHallsId", "MoviesId");
-
-                    b.HasIndex("MoviesId");
-
-                    b.ToTable("CinemaHallMovie");
-
-                    b.HasData(
-                        new
-                        {
-                            CinemaHallsId = 3,
-                            MoviesId = 5
-                        },
-                        new
-                        {
-                            CinemaHallsId = 4,
-                            MoviesId = 5
-                        },
-                        new
-                        {
-                            CinemaHallsId = 1,
-                            MoviesId = 5
-                        },
-                        new
-                        {
-                            CinemaHallsId = 2,
-                            MoviesId = 5
-                        },
-                        new
-                        {
-                            CinemaHallsId = 5,
-                            MoviesId = 5
-                        },
-                        new
-                        {
-                            CinemaHallsId = 6,
-                            MoviesId = 5
-                        },
-                        new
-                        {
-                            CinemaHallsId = 7,
-                            MoviesId = 5
-                        });
-                });
 
             modelBuilder.Entity("EFCoreMovies.Entities.Actor", b =>
                 {
@@ -366,6 +314,9 @@ namespace EFCoreMoviesInfra.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
+                    b.Property<int?>("CinemaHallId")
+                        .HasColumnType("int");
+
                     b.Property<bool>("InCinemas")
                         .HasColumnType("bit");
 
@@ -381,6 +332,8 @@ namespace EFCoreMoviesInfra.Migrations
                         .HasColumnType("nvarchar(150)");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("CinemaHallId");
 
                     b.ToTable("Movies");
 
@@ -443,8 +396,6 @@ namespace EFCoreMoviesInfra.Migrations
                         .HasColumnType("int");
 
                     b.HasKey("MovieId", "ActorId");
-
-                    b.HasIndex("ActorId");
 
                     b.ToTable("MovieActors");
 
@@ -577,30 +528,13 @@ namespace EFCoreMoviesInfra.Migrations
                         });
                 });
 
-            modelBuilder.Entity("CinemaHallMovie", b =>
-                {
-                    b.HasOne("EFCoreMovies.Entities.CinemaHall", null)
-                        .WithMany()
-                        .HasForeignKey("CinemaHallsId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("EFCoreMovies.Entities.Movie", null)
-                        .WithMany()
-                        .HasForeignKey("MoviesId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
             modelBuilder.Entity("EFCoreMovies.Entities.CinemaHall", b =>
                 {
-                    b.HasOne("EFCoreMovies.Entities.Cinema", "Cinema")
+                    b.HasOne("EFCoreMovies.Entities.Cinema", null)
                         .WithMany("CinemaHalls")
                         .HasForeignKey("CinemaId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.Navigation("Cinema");
                 });
 
             modelBuilder.Entity("EFCoreMovies.Entities.CinemaOffer", b =>
@@ -612,23 +546,11 @@ namespace EFCoreMoviesInfra.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("EFCoreMovies.Entities.MovieActor", b =>
+            modelBuilder.Entity("EFCoreMovies.Entities.Movie", b =>
                 {
-                    b.HasOne("EFCoreMovies.Entities.Actor", "Actor")
-                        .WithMany("MoviesActors")
-                        .HasForeignKey("ActorId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("EFCoreMovies.Entities.Movie", "Movie")
-                        .WithMany("MoviesActors")
-                        .HasForeignKey("MovieId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Actor");
-
-                    b.Navigation("Movie");
+                    b.HasOne("EFCoreMovies.Entities.CinemaHall", null)
+                        .WithMany("Movies")
+                        .HasForeignKey("CinemaHallId");
                 });
 
             modelBuilder.Entity("GenreMovie", b =>
@@ -646,11 +568,6 @@ namespace EFCoreMoviesInfra.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("EFCoreMovies.Entities.Actor", b =>
-                {
-                    b.Navigation("MoviesActors");
-                });
-
             modelBuilder.Entity("EFCoreMovies.Entities.Cinema", b =>
                 {
                     b.Navigation("CinemaHalls");
@@ -658,9 +575,9 @@ namespace EFCoreMoviesInfra.Migrations
                     b.Navigation("CinemaOffer");
                 });
 
-            modelBuilder.Entity("EFCoreMovies.Entities.Movie", b =>
+            modelBuilder.Entity("EFCoreMovies.Entities.CinemaHall", b =>
                 {
-                    b.Navigation("MoviesActors");
+                    b.Navigation("Movies");
                 });
 #pragma warning restore 612, 618
         }

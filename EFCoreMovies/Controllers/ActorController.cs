@@ -17,35 +17,13 @@ namespace EFCoreMovies.Controllers
             this.actorRepository = actorRepository;
         }
 
-        // returns null fields
-        [HttpGet("nullFields")]
-        public async Task<ActionResult<IEnumerable<Actor>>> GetActorsNullFields()
-        {
-            try
-            {
-                var actors = await actorRepository.GetActorsNullFields();
-                return Ok(actors);
-            }
-            catch (Exception ex)
-            {
-                return BadRequest(ex.Message);
-            }
-        }
-
-        // no null fields
-        [HttpGet("noNullFields")]
-        public async Task<ActionResult<IEnumerable<ActorDTO>>> GetActorsNoNullFields()
+        [HttpGet]
+        public async Task<ActionResult<IEnumerable<ActorDTO>>> GetActors()
         {
             try
             {
                 var actors = await actorRepository.GetActors();
-                var actorDtos = actors.Select(a => new ActorDTO
-                {
-                    Id = a.Id,
-                    Name = a.Name,
-                    DateOfBirth = a.DateOfBirth,
-                }).ToList();
-                return Ok(actorDtos);
+                return Ok(actors);
             }
             catch (Exception ex) 
             {
@@ -54,7 +32,7 @@ namespace EFCoreMovies.Controllers
         }
 
         [HttpPut("{id}")]
-        public async Task<ActionResult> UpdateActor(int id, Actor actor)
+        public async Task<ActionResult> UpdateActor(Actor actor)
         {
             try 
             {
