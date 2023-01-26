@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using EFCoreMovies_Core.BusinessModel.Entitiy;
+using System.ComponentModel.DataAnnotations;
 
 namespace EFCoreMovies.Entities
 {
@@ -6,5 +7,6 @@ namespace EFCoreMovies.Entities
     {
         public int Id { get; set; }
         public string Name { get; set; }
+        public IEnumerable<MovieGenre> MovieGenresMapping { get; set; }
     }
 }

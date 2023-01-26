@@ -1,13 +1,11 @@
 ﻿using EFCoreMovies.Entities;
 using EFCoreMovies_Core.BusinessModel.Interface;
-using EFCoreMovies_Infra.Dto;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 
 namespace EFCoreMovies.Controllers
 {
     [ApiController]
-    [Route("api/movie")]
+    [Route("api/Movie")]
     public class MovieController : ControllerBase
     {
         public readonly IMovieRepository movieRepository;
@@ -45,5 +43,18 @@ namespace EFCoreMovies.Controllers
             }
         }
 
+        [HttpGet("MoviesForActor/{actorId}")]
+        public async Task<ActionResult<IEnumerable<Movie>>> GetMoviesForActorByActorId(int actorId)
+        {
+            try
+            {
+                var movies = await movieRepository.GetMoviesForActorByActorId(actorId);
+                return Ok(movies);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
     }
 }

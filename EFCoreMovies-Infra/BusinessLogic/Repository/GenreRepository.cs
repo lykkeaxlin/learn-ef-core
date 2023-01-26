@@ -6,6 +6,7 @@ using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -22,7 +23,9 @@ namespace EFCoreMovies_Infra.BusinessLogic.Repository
 
         public async Task<IEnumerable<Genre>> GetGenres()
         {
-            var genres = await context.Genres.ToListAsync();
+            var genres = await context.Genres
+                .Include(x => x.MovieGenresMapping)
+                .ToListAsync();
             return genres;
         }
 

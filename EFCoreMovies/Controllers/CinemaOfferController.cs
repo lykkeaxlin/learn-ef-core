@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace EFCoreMovies.Controllers
 {
     [ApiController]
-    [Route("api/cinemaoffer")]
+    [Route("api/CinemaOffer")]
     public class CinemaOfferController : ControllerBase
     {
         private readonly ICinemaOfferRepository cinemaOfferRepository;

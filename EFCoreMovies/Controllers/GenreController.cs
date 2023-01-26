@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore;
 namespace EFCoreMovies.Controllers
 {
     [ApiController]
-    [Route("api/genre")]
+    [Route("api/Genre")]
     public class GenreController : ControllerBase
     {
         private readonly IGenreRepository genreRepository;

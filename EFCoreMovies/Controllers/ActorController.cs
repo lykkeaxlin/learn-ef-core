@@ -2,12 +2,11 @@
 using EFCoreMovies_Core.BusinessModel.Interface;
 using EFCoreMovies_Infra.Dto;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 
 namespace EFCoreMovies.Controllers
 {
     [ApiController]
-    [Route("api/actor")]
+    [Route("api/Actor")]
     public class ActorController : ControllerBase
     {
         private readonly IActorRepository actorRepository;

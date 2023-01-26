@@ -4,6 +4,7 @@ using EFCoreMovies;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace EFCoreMoviesInfra.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230126143137_AddMovieGenreMapping")]
+    partial class AddMovieGenreMapping
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -267,11 +270,16 @@ namespace EFCoreMoviesInfra.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
+                    b.Property<int?>("MovieId")
+                        .HasColumnType("int");
+
                     b.Property<string>("Name")
                         .HasMaxLength(150)
                         .HasColumnType("nvarchar(150)");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("MovieId");
 
                     b.ToTable("Genres");
 
@@ -377,7 +385,7 @@ namespace EFCoreMoviesInfra.Migrations
                         });
                 });
 
-            modelBuilder.Entity("EFCoreMovies.Entities.MovieActor", b =>
+            modelBuilder.Entity("EFCoreMovies.Entities.MovieActorMapping", b =>
                 {
                     b.Property<int>("MovieId")
                         .HasColumnType("int");
@@ -450,7 +458,7 @@ namespace EFCoreMoviesInfra.Migrations
                         });
                 });
 
-            modelBuilder.Entity("EFCoreMovies_Core.BusinessModel.Entitiy.MovieGenre", b =>
+            modelBuilder.Entity("EFCoreMovies_Core.BusinessModel.Entitiy.MovieGenreMapping", b =>
                 {
                     b.Property<int>("MovieId")
                         .HasColumnType("int");
@@ -510,6 +518,13 @@ namespace EFCoreMoviesInfra.Migrations
                         .IsRequired();
                 });
 
+            modelBuilder.Entity("EFCoreMovies.Entities.Genre", b =>
+                {
+                    b.HasOne("EFCoreMovies.Entities.Movie", null)
+                        .WithMany("Genres")
+                        .HasForeignKey("MovieId");
+                });
+
             modelBuilder.Entity("EFCoreMovies.Entities.Movie", b =>
                 {
                     b.HasOne("EFCoreMovies.Entities.CinemaHall", null)
@@ -517,7 +532,7 @@ namespace EFCoreMoviesInfra.Migrations
                         .HasForeignKey("CinemaHallId");
                 });
 
-            modelBuilder.Entity("EFCoreMovies.Entities.MovieActor", b =>
+            modelBuilder.Entity("EFCoreMovies.Entities.MovieActorMapping", b =>
                 {
                     b.HasOne("EFCoreMovies.Entities.Actor", "Actor")
                         .WithMany()
@@ -536,16 +551,16 @@ namespace EFCoreMoviesInfra.Migrations
                     b.Navigation("Movie");
                 });
 
-            modelBuilder.Entity("EFCoreMovies_Core.BusinessModel.Entitiy.MovieGenre", b =>
+            modelBuilder.Entity("EFCoreMovies_Core.BusinessModel.Entitiy.MovieGenreMapping", b =>
                 {
                     b.HasOne("EFCoreMovies.Entities.Genre", "Genre")
-                        .WithMany("MovieGenresMapping")
+                        .WithMany()
                         .HasForeignKey("GenreId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("EFCoreMovies.Entities.Movie", "Movie")
-                        .WithMany("MovieGenresMapping")
+                        .WithMany()
                         .HasForeignKey("MovieId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -567,14 +582,9 @@ namespace EFCoreMoviesInfra.Migrations
                     b.Navigation("Movies");
                 });
 
-            modelBuilder.Entity("EFCoreMovies.Entities.Genre", b =>
-                {
-                    b.Navigation("MovieGenresMapping");
-                });
-
             modelBuilder.Entity("EFCoreMovies.Entities.Movie", b =>
                 {
-                    b.Navigation("MovieGenresMapping");
+                    b.Navigation("Genres");
                 });
 #pragma warning restore 612, 618
         }

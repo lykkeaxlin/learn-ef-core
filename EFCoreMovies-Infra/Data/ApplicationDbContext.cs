@@ -1,5 +1,6 @@
 ﻿using EFCoreMovies.Entities;
 using EFCoreMovies.Entities.Seeding;
+using EFCoreMovies_Core.BusinessModel.Entitiy;
 using Microsoft.EntityFrameworkCore;
 using System.Reflection;
 
@@ -13,7 +14,8 @@ namespace EFCoreMovies
         public DbSet<Movie> Movies { get; set; }
         public DbSet<CinemaOffer> CinemaOffers { get; set; }
         public DbSet<CinemaHall> CinemaHalls { get; set; }
-        public DbSet<MovieActor> MovieActors { get; set; }
+        public DbSet<MovieActor> MovieActorMappings { get; set; }
+        public DbSet<MovieGenre> MovieGenreMappings { get; set; }
         public ApplicationDbContext(DbContextOptions options) : base(options)
         {
         }
@@ -29,6 +31,7 @@ namespace EFCoreMovies
             base.OnModelCreating(modelBuilder);
             modelBuilder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
             modelBuilder.Entity<MovieActor>().HasKey(p => new { p.MovieId, p.ActorId });
+            modelBuilder.Entity<MovieGenre>().HasKey(p => new { p.MovieId, p.GenreId });
             Module3Seeding.Seed(modelBuilder);
         }
     }

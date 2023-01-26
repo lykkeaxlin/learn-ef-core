@@ -2,6 +2,7 @@
 using NetTopologySuite.Geometries;
 using NetTopologySuite;
 using System.Reflection.Emit;
+using EFCoreMovies_Core.BusinessModel.Entitiy;
 
 namespace EFCoreMovies.Entities.Seeding
 {
@@ -116,11 +117,6 @@ namespace EFCoreMovies.Entities.Seeding
                 PosterURL = "https://upload.wikimedia.org/wikipedia/en/8/8a/The_Avengers_%282012_film%29_poster.jpg",
             };
 
-            var cinemaHallsId           = "CinemaHallsId";
-            var moviesId                = "MoviesId";
-
-            var genresId                = "GenresId";
-
             var coco = new Movie()
             {
                 Id = 2,
@@ -218,6 +214,39 @@ namespace EFCoreMovies.Entities.Seeding
             modelBuilder.Entity<MovieActor>().HasData(samuelJacksonFFH, tomHollandFFH,
                 tomHollandNWH, avengersRobertDowney, avengersScarlettJohansson,
                 avengersChrisEvans, keanuReevesMatrix);
+
+            var avengersAction = new MovieGenre()
+            {
+                MovieId = avengers.Id,
+                GenreId = action.Id,
+            };
+
+            var avengersDrama = new MovieGenre()
+            {
+                MovieId = avengers.Id,
+                GenreId = drama.Id,
+            };
+
+            var noWayHomeAction = new MovieGenre()
+            {
+                MovieId = noWayHome.Id,
+                GenreId = action.Id,
+            };
+
+            var farFromHomeComedy = new MovieGenre()
+            {
+                MovieId = farFromHome.Id,
+                GenreId = comedy.Id,
+            };
+
+            var theMatrixAnimation = new MovieGenre()
+            {
+                MovieId = theMatrixResurrections.Id,
+                GenreId = animation.Id,
+            };
+
+            modelBuilder.Entity<MovieGenre>().HasData(avengersAction, avengersDrama,
+                noWayHomeAction, farFromHomeComedy, theMatrixAnimation);
         }
     }
 }

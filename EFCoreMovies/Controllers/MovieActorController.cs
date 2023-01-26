@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace EFCoreMovies.Controllers
 {
     [ApiController]
-    [Route("api/movieactor")]
+    [Route("api/MovieActor")]
     public class MovieActorController : ControllerBase
     {
         private readonly IMovieActorRepository movieActorRepository;
@@ -20,7 +20,7 @@ namespace EFCoreMovies.Controllers
         { 
             try 
             {
-                var movieActors = await movieActorRepository.GetMovieActors();
+                var movieActors = await movieActorRepository.GetMovieActorMappings();
                 return Ok(movieActors);
             }
             catch (Exception ex)

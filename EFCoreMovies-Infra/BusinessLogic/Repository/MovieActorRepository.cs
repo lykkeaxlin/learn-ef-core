@@ -18,10 +18,13 @@ namespace EFCoreMovies_Infra.BusinessLogic.Repository
         {
             this.context = context;
         }
-    
-        public async Task<IEnumerable<MovieActor>> GetMovieActors()
+
+        public async Task<IEnumerable<MovieActor>> GetMovieActorMappings()
         {
-            var movieActors = await context.MovieActors.ToListAsync();
+            var movieActors = await context.MovieActorMappings
+                                .Include(x => x.Movie)
+                                .Include(x => x.Actor)
+                                .ToListAsync();
             return movieActors;
         }
     }

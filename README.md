@@ -80,3 +80,56 @@ Don't forget dependency injection:
 ```
 builder.Services.AddScoped<IGenreRepository, GenreRepository>();
 ```
+
+## `DbContext.cs`:
+
+Add `Èntity` to `DbContext`
+
+```
+public DbSet<Genre> Genres { get; set; }
+```
+
+# Configuring relationships
+
+## Many-to-many
+
+```
+public class Book
+{
+    public int BookId { get; set; }
+    public string Title { get; set; }
+    public Author Author { get; set; }
+    public ICollection<BookCategory> BookCategories { get; set; }
+}
+public class Category
+{
+    public int CategoryId { get; set; }
+    public string CategoryName { get; set; }
+    public ICollection<BookCategory> BookCategories { get; set; }
+}
+public class BookCategory
+{
+    public int BookId { get; set; }
+    public Book Book { get; set; }
+    public int CategoryId { get; set; }
+    public Category Category { get; set; }
+}
+```
+
+And specify relationship:
+
+```
+protected override void OnModelCreating(ModelBuilder modelBuilder)
+{
+    modelBuilder.Entity<BookCategory>()
+        .HasKey(bc => new { bc.BookId, bc.CategoryId });
+    modelBuilder.Entity<BookCategory>()
+        .HasOne(bc => bc.Book)
+        .WithMany(b => b.BookCategories)
+        .HasForeignKey(bc => bc.BookId);
+    modelBuilder.Entity<BookCategory>()
+        .HasOne(bc => bc.Category)
+        .WithMany(c => c.BookCategories)
+        .HasForeignKey(bc => bc.CategoryId);
+}
+```

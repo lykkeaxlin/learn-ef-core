@@ -1,4 +1,4 @@
-﻿using EFCoreMovies.Entities;
+﻿using EFCoreMovies_Core.BusinessModel.Entitiy;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,8 +7,8 @@ using System.Threading.Tasks;
 
 namespace EFCoreMovies_Core.BusinessModel.Interface
 {
-    public interface IMovieActorRepository
+    public interface IMovieGenreRepository 
     {
-        Task<IEnumerable<MovieActor>> GetMovieActorMappings();
+        Task<IEnumerable<MovieGenre>> GetMovieGenreMappings();
     }
 }

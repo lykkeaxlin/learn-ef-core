@@ -1,16 +1,11 @@
-﻿using EFCoreMovies.Entities;
-using EFCoreMovies_Core.BusinessModel.Interface;
+﻿using EFCoreMovies_Core.BusinessModel.Interface;
 using EFCoreMovies_Infra.Dto;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.Spatial;
-using NetTopologySuite;
-using NetTopologySuite.Geometries;
 
 namespace EFCoreMovies.Controllers
 {
     [ApiController]
-    [Route("api/cinema")]
+    [Route("api/Cinema")]
     public class CinemaController : ControllerBase
     {
         private readonly ICinemaRepository cinemaRepository;

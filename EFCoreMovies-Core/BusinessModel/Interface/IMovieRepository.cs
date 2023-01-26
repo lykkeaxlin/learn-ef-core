@@ -12,5 +12,6 @@ namespace EFCoreMovies_Core.BusinessModel.Interface
         Task<IEnumerable<Movie>> GetMovies();
         Task<Movie> GetMovieById(int id);
         Task<IEnumerable<Movie>> GetMoviesGroupedByCinemas();
+        Task<IEnumerable<Movie>> GetMoviesForActorByActorId(int actorId);
     }
 }

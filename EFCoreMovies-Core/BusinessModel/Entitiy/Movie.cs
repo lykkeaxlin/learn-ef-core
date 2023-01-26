@@ -1,4 +1,6 @@
-﻿namespace EFCoreMovies.Entities
+﻿using EFCoreMovies_Core.BusinessModel.Entitiy;
+
+namespace EFCoreMovies.Entities
 {
     public class Movie
     {
@@ -7,6 +9,6 @@
         public bool InCinemas { get; set; }
         public DateTime ReleaseDate { get; set; }
         public string PosterURL { get; set; }
-        public HashSet<Genre> Genres { get; set; }
+        public IEnumerable<MovieGenre> MovieGenresMapping { get; set; }
     }
 }
