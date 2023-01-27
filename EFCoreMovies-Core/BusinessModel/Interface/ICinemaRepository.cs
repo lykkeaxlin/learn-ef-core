@@ -10,5 +10,6 @@ namespace EFCoreMovies_Core.BusinessModel.Interface
     public interface ICinemaRepository
     {
         Task<IEnumerable<Cinema>> GetCinemas();
+        Task<Cinema> DeleteCinemaById(int id);
     }
 }

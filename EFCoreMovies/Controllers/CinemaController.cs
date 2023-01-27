@@ -1,4 +1,5 @@
-﻿using EFCoreMovies_Core.BusinessModel.Interface;
+﻿using EFCoreMovies.Entities;
+using EFCoreMovies_Core.BusinessModel.Interface;
 using EFCoreMovies_Infra.Dto;
 using Microsoft.AspNetCore.Mvc;
 
@@ -25,6 +26,20 @@ namespace EFCoreMovies.Controllers
                 return Ok(cinemas);
             }
             catch(Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
+        [HttpDelete("{cinemaId}")]
+        public async Task<ActionResult<Cinema>> DeleteCinemaById(int cinemaId)
+        {
+            try
+            {
+                var cinema = await cinemaRepository.DeleteCinemaById(cinemaId);
+                return Ok(cinema);
+            }
+            catch (Exception ex)
             {
                 return BadRequest(ex.Message);
             }

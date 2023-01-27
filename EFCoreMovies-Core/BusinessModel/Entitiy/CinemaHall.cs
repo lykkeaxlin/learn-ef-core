@@ -7,7 +7,7 @@ namespace EFCoreMovies.Entities
         public int Id { get; set; }
         public CinemaHallType CinemaHallType { get; set; }
         public decimal Cost { get; set; }
-        public int CinemaId { get; set; }
+        public int? CinemaId { get; set; }
         public IEnumerable<Movie> Movies { get; set; }
     }
 }
