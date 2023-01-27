@@ -178,6 +178,7 @@ public class CinemaHall
 {
     public int Id { get; set; }
     public int CinemaId { get; set; } // foreign key
+    public Cinema Cinema { get; set; } // not mandatory but useful in case Include is needed
 }
 ```
 
