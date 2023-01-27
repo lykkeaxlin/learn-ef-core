@@ -289,4 +289,15 @@ public class Message
 
 `Restrict` - delete is not executed on dependent entities
 
+# DTO
+
+Data transfer objects, does not have a table in the database but is used to transfer data to and from the server.
+
 # Migrations
+
+# Optimization
+
+## `FirstOrDefault()` vs `Find()`:
+
+- `FirstOrDefault` - always executes a query to the database
+- `Find` - only queries the database in case the requested entity is not loaded in the database context. **Can only be used when the primary key is passed as a parameter.**

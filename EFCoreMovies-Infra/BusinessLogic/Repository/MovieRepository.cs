@@ -22,8 +22,8 @@ namespace EFCoreMovies_Infra.BusinessLogic.Repository
         }
         public async Task<Movie> GetMovieById(int id)
         {
-            var movies = await context.Movies.FirstOrDefaultAsync(x => x.Id == id);
-            return movies;
+            var movie = await context.Movies.FindAsync(id);
+            return movie;
         }
 
         public Task<IEnumerable<Movie>> GetMoviesGroupedByCinemas()
