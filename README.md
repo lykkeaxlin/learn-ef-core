@@ -160,7 +160,6 @@ public class CinemaOffer
 {
     public int Id { get; set; }
     public int CinemaId { get; set; } // foreign key
-    public Cinema Cinema { get; set; }
 }
 ```
 
