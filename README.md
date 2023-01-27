@@ -169,7 +169,7 @@ public class CinemaOffer
 public class Cinema
 {
     public int Id { get; set; }
-    public CinemaOffer CinemaOffer { get; set; }
+    public IEnumerable<CinemaHall> CinemaHalls { get; set; }
 }
 ```
 
@@ -178,6 +178,7 @@ public class CinemaHall
 {
     public int Id { get; set; }
     public int CinemaId { get; set; } // foreign key
+    public Cinema Cinema { get; set; }
 }
 ```
 
