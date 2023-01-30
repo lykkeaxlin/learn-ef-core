@@ -295,6 +295,36 @@ Data transfer objects, does not have a table in the database but is used to tran
 
 # Migrations
 
+```
+update-database -migration 0 // unapply all migrations
+
+remove-migration -force // revert to database level, or add a new migration if it should be partially reverted
+
+drop-database // delete database
+```
+
+# DbContext
+
+```
+context.Add(entity);
+context.Entry(entity).State = EntityState.Added; // same thing
+
+context.Update(entity); // update all columns
+context.Entry(entity).Property(x => x.Name).IsModified = true; // only update certain columns
+```
+
+Arbitrary quieries (can be combined with LINQ):
+
+```
+var genre = await context.Genres.FirstOrDefaultAsync(x => x.Id == id);
+
+var genre = await context.Genres
+        .FromSqlInterpolated(
+            $"SELECT * FROM Genres WHERE Id = {id}")
+        .IgnoreQueryFilters()
+        .FirstOfDefaultAsync(); // same
+```
+
 # Optimization
 
 ## `FirstOrDefault()` vs `Find()`:
