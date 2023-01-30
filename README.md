@@ -3,24 +3,24 @@
 - [learn-ef-core](#learn-ef-core)
   - [DB](#db)
 - [Repository pattern](#repository-pattern)
-  - [`Core:`](#core)
-  - [`Infra:`](#infra)
-  - [`UI`:](#ui)
-  - [`Program.cs`:](#programcs)
-  - [`DbContext.cs`:](#dbcontextcs)
+  - [Core](#core)
+  - [Infra](#infra)
+  - [UI](#ui)
+  - [`Program.cs`](#programcs)
+  - [`DbContext.cs`](#dbcontextcs)
 - [Configuration relationships](#configuration-relationships)
-  - [`one-to-one relationships`:](#one-to-one-relationships)
-  - [`one-to-many relationships`:](#one-to-many-relationships)
-  - [`many-to-many relationships`:](#many-to-many-relationships)
+  - [one-to-one relationships](#one-to-one-relationships)
+  - [one-to-many relationships](#one-to-many-relationships)
+  - [many-to-many relationships](#many-to-many-relationships)
     - [With intermediate entity (without skipping):](#with-intermediate-entity-without-skipping)
     - [Without intermediate entity (with skipping):](#without-intermediate-entity-with-skipping)
     - [](#)
-  - [`OnDelete`](#ondelete)
+  - [OnDelete](#ondelete)
 - [DTO](#dto)
 - [Migrations](#migrations)
 - [DbContext](#dbcontext)
 - [Optimization](#optimization)
-  - [`FirstOrDefault()` vs `Find()`:](#firstordefault-vs-find)
+  - [FirstOrDefault() vs Find()](#firstordefault-vs-find)
 
 
 ## DB
@@ -29,7 +29,7 @@
 
 # Repository pattern
 
-## `Core:`
+## Core
 
 `Interface:` Declare methods that should be implemented by corresponding repository, e.g.
 
@@ -40,7 +40,7 @@ public interface IGenreRepository
 }
 ```
 
-## `Infra:`
+## Infra
 
 `Repository:` Implementation of repository interfaces, e.g.
 
@@ -64,7 +64,7 @@ public class GenreRepository : IGenreRepository
 }
 ```
 
-## `UI`:
+## UI
 
 `Controllers:` Endpoints, use the repositories, e.g.
 
@@ -96,7 +96,7 @@ public class GenreController : ControllerBase
 }
 ```
 
-## `Program.cs`:
+## `Program.cs`
 
 Don't forget dependency injection:
 
@@ -104,7 +104,7 @@ Don't forget dependency injection:
 builder.Services.AddScoped<IGenreRepository, GenreRepository>();
 ```
 
-## `DbContext.cs`:
+## `DbContext.cs`
 
 Add `Entity` to `DbContext`
 
@@ -168,7 +168,7 @@ public async Task<Cinema> DeleteCinemaById(int id)
 }
 ```
 
-## `one-to-one relationships`:
+## one-to-one relationships
 
 ```
 public class Cinema
@@ -186,7 +186,7 @@ public class CinemaOffer
 }
 ```
 
-## `one-to-many relationships`:
+## one-to-many relationships
 
 ```
 public class Cinema
@@ -205,7 +205,7 @@ public class CinemaHall
 }
 ```
 
-## `many-to-many relationships`:
+## many-to-many relationships
 
 ### With intermediate entity (without skipping):
 
@@ -304,7 +304,7 @@ public class Message
 }
 ```
 
-## `OnDelete`
+## OnDelete
 
 `Cascade` - the dependent entities are deleted if the principal entity is deleted
 
@@ -349,7 +349,7 @@ var genre = await context.Genres
 
 # Optimization
 
-## `FirstOrDefault()` vs `Find()`:
+## FirstOrDefault() vs Find()
 
 - `FirstOrDefault` - always executes a query to the database
 - `Find` - only queries the database in case the requested entity is not loaded in the database context. **Can only be used when the primary key is passed as a parameter.**
