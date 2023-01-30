@@ -20,7 +20,9 @@
 - [Migrations](#migrations)
 - [DbContext](#dbcontext)
 - [Optimization](#optimization)
+  - [nvarchar(max)](#nvarcharmax)
   - [FirstOrDefault() vs Find()](#firstordefault-vs-find)
+- [XEventProfiler](#xeventprofiler)
 
 
 ## DB
@@ -349,7 +351,22 @@ var genre = await context.Genres
 
 # Optimization
 
+## nvarchar(max)
+
+Any string will by default have `nvarchar` max length. When we do a request, `varchar/nvarchar` are assumed to be half full. A query for a `nvarchar(64)` rqeuested less than `5kB`, while a request for a `nvarchar(max)` uses `272 kB`, whereas **only 2%** of that memory was used per request. So about **50** times more memory is requested for possibly the same data, **for every string field**. 
+
+Could be fixed by specifying the length of strings in the db context for example.
+
+```
+protected override void ConfigureConventions(ModelConfigurationBuilder configurationBuilder)
+{
+    configurationBuilder.Properties<string>().HaveMaxLength(150);
+}
+```
+
 ## FirstOrDefault() vs Find()
 
 - `FirstOrDefault` - always executes a query to the database
 - `Find` - only queries the database in case the requested entity is not loaded in the database context. **Can only be used when the primary key is passed as a parameter.**
+
+# XEventProfiler
