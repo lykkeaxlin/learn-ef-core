@@ -1,5 +1,28 @@
 # learn-ef-core
 
+- [learn-ef-core](#learn-ef-core)
+  - [DB](#db)
+- [Repository pattern](#repository-pattern)
+  - [`Core:`](#core)
+  - [`Infra:`](#infra)
+  - [`UI`:](#ui)
+  - [`Program.cs`:](#programcs)
+  - [`DbContext.cs`:](#dbcontextcs)
+- [Configuration relationships](#configuration-relationships)
+  - [`one-to-one relationships`:](#one-to-one-relationships)
+  - [`one-to-many relationships`:](#one-to-many-relationships)
+  - [`many-to-many relationships`:](#many-to-many-relationships)
+    - [With intermediate entity (without skipping):](#with-intermediate-entity-without-skipping)
+    - [Without intermediate entity (with skipping):](#without-intermediate-entity-with-skipping)
+    - [](#)
+  - [`OnDelete`](#ondelete)
+- [DTO](#dto)
+- [Migrations](#migrations)
+- [DbContext](#dbcontext)
+- [Optimization](#optimization)
+  - [`FirstOrDefault()` vs `Find()`:](#firstordefault-vs-find)
+
+
 ## DB
 
 ![Skärmbild_20230126_101947](https://user-images.githubusercontent.com/46992305/214799981-8bcee50e-6f12-4816-a04c-c234190e5f13.png)
@@ -319,8 +342,7 @@ Arbitrary quieries (can be combined with LINQ):
 var genre = await context.Genres.FirstOrDefaultAsync(x => x.Id == id);
 
 var genre = await context.Genres
-        .FromSqlInterpolated(
-            $"SELECT * FROM Genres WHERE Id = {id}")
+        .FromSqlInterpolated($"SELECT * FROM Genres WHERE Id = {id}")
         .IgnoreQueryFilters()
         .FirstOfDefaultAsync(); // same
 ```
