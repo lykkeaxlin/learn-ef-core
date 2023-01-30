@@ -6,8 +6,8 @@
   - [Core](#core)
   - [Infra](#infra)
   - [UI](#ui)
-  - [`Program.cs`](#programcs)
-  - [`DbContext.cs`](#dbcontextcs)
+  - [Program.cs](#programcs)
+  - [DbContext.cs](#dbcontextcs)
 - [Configuration relationships](#configuration-relationships)
   - [one-to-one relationships](#one-to-one-relationships)
   - [one-to-many relationships](#one-to-many-relationships)
@@ -96,7 +96,7 @@ public class GenreController : ControllerBase
 }
 ```
 
-## `Program.cs`
+## Program.cs
 
 Don't forget dependency injection:
 
@@ -104,7 +104,7 @@ Don't forget dependency injection:
 builder.Services.AddScoped<IGenreRepository, GenreRepository>();
 ```
 
-## `DbContext.cs`
+## DbContext.cs
 
 Add `Entity` to `DbContext`
 
