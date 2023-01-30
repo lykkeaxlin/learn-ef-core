@@ -353,7 +353,7 @@ var genre = await context.Genres
 
 ## nvarchar(max)
 
-Any string will by default have `nvarchar` max length. When we do a request, `varchar/nvarchar` are assumed to be half full. A query for a `nvarchar(64)` rqeuested less than `5kB`, while a request for a `nvarchar(max)` uses `272 kB`, whereas **only 2%** of that memory was used per request. So about **50** times more memory is requested for possibly the same data, **for every string field**. 
+Any string will by default have `nvarchar(max)`. When we do a request, `varchar/nvarchar` are assumed to be half full. A query for a `nvarchar(64)` rqeuested less than `5kB` memory, while a request for a `nvarchar(max)` requested `272 kB` memory.  **Only 2%** of of the requested 272 kB memory were used. So about **50** times more memory was requested for possibly the same data, **for every string field**. 
 
 Could be fixed by specifying the length of strings in the db context for example.
 
