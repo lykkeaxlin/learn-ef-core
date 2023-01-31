@@ -23,6 +23,10 @@
   - [nvarchar(max)](#nvarcharmax)
   - [FirstOrDefault() vs Find()](#firstordefault-vs-find)
   - [Where clause: SQL vs C#](#where-clause-sql-vs-c)
+- [Testing](#testing)
+- [VS Studio](#vs-studio)
+  - [Commands](#commands)
+- [T-SQL](#t-sql)
 
 
 ## DB
@@ -399,3 +403,20 @@ public Task<IEnumerable<People>> GetApprovedPeople()
     return people;
 }
 ```
+
+# Testing
+
+
+# VS Studio 
+
+## Commands
+
+`SHIFT` + `ENTER` - automatic new line and curly braces
+
+`CTRL` + `SHIFT` + `F` - search in all files
+
+`CTRL` + `T` - to go file
+
+`CTRL` + `.` - generate constructor, auto import etc.
+
+# T-SQL 
