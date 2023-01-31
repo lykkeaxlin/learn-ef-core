@@ -22,7 +22,7 @@
 - [Optimization](#optimization)
   - [nvarchar(max)](#nvarcharmax)
   - [FirstOrDefault() vs Find()](#firstordefault-vs-find)
-- [XEventProfiler](#xeventprofiler)
+  - [Where clause: SQL vs C#](#where-clause-sql-vs-c)
 
 
 ## DB
@@ -369,4 +369,33 @@ protected override void ConfigureConventions(ModelConfigurationBuilder configura
 - `FirstOrDefault` - always executes a query to the database
 - `Find` - only queries the database in case the requested entity is not loaded in the database context. **Can only be used when the primary key is passed as a parameter.**
 
-# XEventProfiler
+## Where clause: SQL vs C# 
+C# functions can not be translated into T-SQL, therefore, the first part before the `where` clause will be executed and then the whole list of records will be filtered in C#, which we don't want since SQL is much faster at storing and retrieving data. Therefore, filter before you download the data. 
+
+```
+private bool ApprovedAge(int age)
+{
+    return (age >= 18 && age <= 16);
+}
+
+// DO NOT DO THIS!!
+public Task<IEnumerable<People>> GetApprovedPeople()
+{
+    var people = await context.People
+        .Include(x => x.Addresses)
+        .ToListAsync()
+        .Where(x => ApprovedAge(x.Age));
+    
+    return people;
+}
+
+public Task<IEnumerable<People>> GetApprovedPeople()
+{
+    var people = await context.People
+        .Include(x => x.Addresses)
+        .Where(x => x.AGe >= 18 && x.Age <= 65)
+        .ToListAsync();
+    
+    return people;
+}
+```
