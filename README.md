@@ -23,7 +23,7 @@
   - [nvarchar(max)](#nvarcharmax)
   - [FirstOrDefault() vs Find()](#firstordefault-vs-find)
   - [Where clause: SQL vs C#](#where-clause-sql-vs-c)
-- [Testing](#testing)
+- [C#](#c)
 - [VS Studio](#vs-studio)
   - [Commands](#commands)
 - [T-SQL](#t-sql)
@@ -404,8 +404,9 @@ public Task<IEnumerable<People>> GetApprovedPeople()
 }
 ```
 
-# Testing
+# C#
 
+`virtual` - a method must be declared `virtual` in a super class in order to enable overriding in a sub class
 
 # VS Studio 
 
